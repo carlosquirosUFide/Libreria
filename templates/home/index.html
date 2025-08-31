@@ -1,0 +1,64 @@
+{% extends 'layout_interno.html' %}
+
+{% block title %} Página Principal {% endblock %}
+
+{% block content %}
+    <div id="carouselExampleIndicators" class="carousel slide">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="{{url_for('static',filename='img/carrusel-1.png')}}" height="400" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+        <img src="{{url_for('static',filename='img/carrusel-2.png')}}" height="400" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+        <img src="{{url_for('static',filename='img/carrusel-3.png')}}" height="400" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="h1 text-center my-3">Nuestros Productos</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <form>
+                    <input type="text" class="form-control" placeholder="Ingrese el nombre del producto a buscar">
+                    <input type= "submit" class="btn btn-primary my-2 w-100" value="Buscar">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% for libro in libros %}
+                <div class="card border-secondary m-5" style="width: 18rem;">
+                    <img src="{{url_for('static', filename = libro.url_imagen)}}" class="card-img-top mt-2" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{libro.nombre_libro}}</h5>
+                        <p class="card-text">Precio: {{libro.precio}}</p>
+                        <p class="card-text">Cantidad: {{libro.cantidad}}</p>
+                        <p class="card-text">Autor: {{libro.nombre_autor}}</p>
+                        <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
+                        <p class="card-text">Categoría: {{libro.nombre_categoria}}</p>
+                        <button class="btn btn-success">Agregar al carrito</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
