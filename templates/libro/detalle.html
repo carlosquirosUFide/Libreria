@@ -1,0 +1,35 @@
+{% extends 'layout_interno.html' %}
+
+{% block title%} Detalle Libro {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+            <div class="row justify-content-center m-5">
+                <div class="col-6">
+                    <div class="card border border border-dark shadow">
+                    <div class="card-header bg-primary">
+                        <h1 class="h1 text-white text-center">Detalle Libro</h1>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <p><strong>ID: </strong>{{libro.id}}</p>
+                            <p><strong>Nombre: </strong>{{libro.nombre_libro}}</p>
+                            <p><strong>Categoría: </strong>{{libro.nombre_categoria}}</p>
+                            <p><strong>Editorial: </strong>{{libro.nombre_editorial}}</p>
+                            <p><strong>Autor: </strong>{{libro.nombre_autor}}</p>
+                            <p><strong>Precio: </strong>{{libro.precio}}</p>
+                            <p><strong>Cantidad: </strong>{{libro.cantidad}}</p>
+                            <p><strong>Activo: </strong>{{ "Activo" if libro.activo else "Inactivo" }}</p>
+                            <a href="{{url_for('libro.index')}}" class="btn btn-success w-100 my-3">Volver</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static',filename='js/confirmarGuardado.js')}}"></script>
+
+{% endblock %}
+

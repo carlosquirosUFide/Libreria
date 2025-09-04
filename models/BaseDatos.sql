@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS libro(
     id_autor INT NOT NULL,
     id_editorial INT NOT NULL,
     id_categoria INT NOT NULL,
-    url_imagen VARCHAR(255),
+    url_imagen VARCHAR(255) NOT NULL,
+    activo BOOL NOT NULL,
     CONSTRAINT pk_libro PRIMARY KEY (id),
     CONSTRAINT FK_LIBRO_AUTOR FOREIGN KEY(id_autor) REFERENCES autor(id) ON DELETE CASCADE,
     CONSTRAINT fk_libro_editorial FOREIGN KEY (id_editorial) REFERENCES editorial(id) ON DELETE CASCADE,
@@ -116,17 +117,17 @@ INSERT INTO libreria.editorial (nombre_editorial) VALUES
     ('Diana');
 
 -- Tabla libros
-INSERT INTO libreria.libro (precio, cantidad, nombre_libro, id_autor, id_editorial, id_categoria, url_imagen) VALUES
-    (5500, 10, 'Cien Años de Soledad',  1, 5, 1, 'img/imagen-1.jpg'),
-    (8000, 5, 'Rayuela', 2, 3, 1, 'img/imagen-2.jpg'),
-    (1000, 11, 'Harry Potter y la Piedra Filosofal', 3, 2, 1, 'img/imagen-3.jpg'),
-    (6000, 5, 'La Tregua', 10, 5, 1, 'img/imagen-4.jpg'),
-    (9000, 7, '1984', 4, 1, 1, 'img/imagen-5.jpg'),
-    (7500, 3, 'Introducción al Psicoanálisis', 9, 2, 9, 'img/imagen-6.jpg'),
-    (4500, 3, 'Los Miserables', 5, 1, 1, 'img/imagen-7.jpg'),
-    (6250, 8, 'Crónica de una Muerte anunciada', 1, 5, 1, 'img/imagen-8.jpg'),
-    (8000, 9, 'Amor en los Tiempos del Cólera', 1, 5, 1, 'img/imagen-9.jpg'),
-    (4568, 2, 'Ética a Nicomaco', 6, 2, 8, 'img/imagen-10.jpg');
+INSERT INTO libreria.libro (precio, cantidad, nombre_libro, id_autor, id_editorial, id_categoria, url_imagen, activo) VALUES
+    (5500, 10, 'Cien Años de Soledad',  1, 5, 1, 'img/imagen-1.jpg',1),
+    (8000, 5, 'Rayuela', 2, 3, 1, 'img/imagen-2.jpg',1),
+    (1000, 11, 'Harry Potter y la Piedra Filosofal', 3, 2, 1, 'img/imagen-3.jpg',1),
+    (6000, 5, 'La Tregua', 10, 5, 1, 'img/imagen-4.jpg',1),
+    (9000, 7, '1984', 4, 1, 1, 'img/imagen-5.jpg',1),
+    (7500, 3, 'Introducción al Psicoanálisis', 9, 2, 9, 'img/imagen-6.jpg',1),
+    (4500, 3, 'Los Miserables', 5, 1, 1, 'img/imagen-7.jpg',1),
+    (6250, 8, 'Crónica de una Muerte anunciada', 1, 5, 1, 'img/imagen-8.jpg',1),
+    (8000, 9, 'Amor en los Tiempos del Cólera', 1, 5, 1, 'img/imagen-9.jpg',1),
+    (4568, 2, 'Ética a Nicomaco', 6, 2, 8, 'img/imagen-10.jpg',1);
 
 INSERT INTO libreria.rol (nombre_rol, activo) VALUES
     ('Administrador', 1),
@@ -272,7 +273,8 @@ BEGIN
             url_imagen,
             a.nombre_autor,
             e.nombre_editorial,
-            c.nombre_categoria
+            c.nombre_categoria,
+            l.activo
     FROM    libro l
     INNER JOIN autor a
     ON      a.id = l.id_autor
@@ -306,7 +308,8 @@ BEGIN
         id_autor,
         id_editorial,
         id_categoria,
-        url_imagen
+        url_imagen,
+        activo
     ) 
 
     VALUES (
@@ -316,7 +319,8 @@ BEGIN
         p_id_autor,
         p_id_editorial,
         p_id_categoria,
-        p_url_imagen
+        p_url_imagen,
+        1
     );
 
 END //
@@ -372,8 +376,7 @@ BEGIN
     ON      c.id = l.id_categoria
     INNER JOIN editorial e
     ON      e.id = l.id_editorial
-    WHERE l.id = p_id
-    ORDER BY id;
+    WHERE l.id = p_id;
             
     
 END //
@@ -476,7 +479,9 @@ CREATE PROCEDURE sp_crear_usuario(
     P_ID_ROL INT
 )
 BEGIN
-DECLARE P_ACTIVO BOOL = 1 ;
+    DECLARE P_ACTIVO BOOL ;
+    SET P_ACTIVO = 1;
+
     INSERT INTO USUARIO  (
         NOMBRE,
         APELLIDOS,

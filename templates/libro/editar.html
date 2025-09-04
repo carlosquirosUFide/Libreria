@@ -1,0 +1,89 @@
+{% extends 'layout_interno.html' %}
+
+{% block title%} Editar Libro {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+            <div class="row justify-content-center m-5">
+                <div class="col-6">
+                    <div class="card border border border-dark shadow">
+                    <div class="card-header bg-primary">
+                        <h1 class="h1 text-white text-center">Editar Libro</h1>
+                    </div>
+                    <div class="card-body">
+                        <form enctype="multipart/form-data" action="" method="POST" id = "formulario" onsubmit="enviarFormulario(event,'¿Está seguro que desea guardar los cambios?')">
+                            <input type="hidden" name="{{libro.id}}" id="{{libro.id}}" value="{{libro.id}}">
+                            <div class="form-group">
+                                <label for="nombre_libro">Nombre Libro</label>
+                                <input  name = "nombre_libro" id = "nombre_libro" type="text" class="form-control" value="{{libro.nombre_libro}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_libro">Nombre Categoria</label>
+                                <select class= "form-control" name="categoria" id="categoria">
+                                    <option value="">Seleccione una opción</option>
+                                    {% for categoria in categorias %}
+                                        {% if categoria.id == libro.id_categoria %}
+                                            <option value="{{categoria.id}}" selected>{{categoria.nombre_categoria}}</option>
+                                        {% else %}
+                                            <option value="{{categoria.id}}">{{categoria.nombre_categoria}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>     
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_libro">Nombre Autor</label>
+                                <select class= "form-control" name="autor" id="autor">
+                                    <option value="">Seleccione una opción</option>
+                                    {% for autor in autores %}
+                                        {% if autor.id == libro.id_autor %}
+                                            <option value="{{autor.id}}" selected>{{autor.nombre_autor}}</option>
+                                        {% else %}
+                                            <option value="{{autor.id}}">{{autor.nombre_autor}}</option>
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_libro">Nombre Editorial</label>
+                                <select class= "form-control" name="editorial" id="editorial">
+                                    <option value="">Seleccione una opción</option>
+                                    {% for editorial in editoriales %}
+                                        {% if editorial.id == libro.id_editorial %}
+                                            <option value="{{editorial.id}}" selected>{{editorial.nombre_editorial}}</option>
+                                        {% else %}
+                                            <option value="{{editorial.id}}">{{editorial.nombre_editorial}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>       
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_libro">Precio</label>
+                                <input name = "precio" id = "precio" type="text" class="form-control" value="{{libro.precio}}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_libro">Cantidad</label>
+                                <input  name = "cantidad" id = "cantidad" type="text" class="form-control" value="{{libro.cantidad}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="url_imagen">Imagen</label>
+                                {% if libro.url_imagen %}
+                                    <img src="{{url_for('static',filename = libro.url_imagen)}}" width="100px" alt="">
+                                {% endif %}
+                                <input class= "form-control" type="file" name="url_imagen" id="url_imagen">
+                            </div>
+                             <div class="d-flex justify-content-between my-3">
+                                <input type="submit" class="btn btn-success w-50 me-2" value="Guardar">
+                                <a href="{{url_for('libro.index')}}" class="btn btn-primary w-50">Volver</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static',filename='js/confirmarGuardado.js')}}"></script>
+
+{% endblock %}

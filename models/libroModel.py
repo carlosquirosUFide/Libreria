@@ -13,6 +13,16 @@ class LibroModel:
         conexionBD.close()
         return libros
     
+    def buscarLibro(self, id):
+        conexionBD = Conexion().abrirBD()
+        cursor = conexionBD.cursor(buffered= True, dictionary=True)
+        cursor.callproc("sp_buscar_libro",[id])
+        for result in cursor.stored_results():
+            libro = result.fetchone() 
+        cursor.close()
+        conexionBD.close()
+        return libro
+    
     def crearLibro(self, precio, cantidad, nombreLibro, id_autor, id_editorial, id_categoria, url_imagen):
         conexionBD = Conexion().abrirBD()
         cursor = conexionBD.cursor(buffered=True)

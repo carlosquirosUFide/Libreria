@@ -5,6 +5,8 @@ from controllers.categoriaController import categoriabp
 from controllers.editorialController import editorialbp
 from controllers.rolController import rolbp
 from controllers.usuarioController import usuariobp
+from controllers.libroController import librobp
+
 
 app = Flask(__name__)
 app.secret_key = "mi-clave-secreta"
@@ -16,6 +18,11 @@ app.register_blueprint(categoriabp)
 app.register_blueprint(editorialbp)
 app.register_blueprint(rolbp)
 app.register_blueprint(usuariobp)
+app.register_blueprint(librobp)
+
+
+app.config['UPLOAD_FOLDER'] = 'static/img'
+
 
 if __name__ == "__main__":
     app.run(debug=True)

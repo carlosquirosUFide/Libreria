@@ -88,7 +88,7 @@ def eliminar(id):
         retorno = UsuarioModel().eliminarUsuario(id)
 
         if retorno > 0:
-            flash(("No se pudo eliminar el usuario", "error"))
+            flash(("Usuario Eliminado con Éxito", "success"))
             return redirect(url_for('usuario.index'))
         else:
             flash(("No se pudo eliminar el usuario", "error"))

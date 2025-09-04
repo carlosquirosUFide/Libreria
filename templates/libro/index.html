@@ -1,0 +1,64 @@
+{% extends 'layout_interno.html' %}
+
+{% block title%} Libros {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="offset-10 col-3 my-3">
+                <a href="{{url_for('libro.crear')}}" class="btn btn-success">Crear Libro</a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card border border-dark shadow mb-3">
+                <div class="card-header bg-primary">
+                    <h1 class="h1 text-white text-center">Listado de  Libros</h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="Tabla">
+                            <thead class="table-primary">
+                                <tr>
+                                    <td>#</td>
+                                    <td>Nombre</td>
+                                    <td>Editorial</td>
+                                    <td>Autor</td>
+                                    <td>Precio</td>
+                                    <td>Cantidad</td>
+                                    <td>Estado</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for libro in libros %}
+                                    <tr>
+                                        <td>{{libro.id}}</td>
+                                        <td>{{libro.nombre_libro}}</td>
+                                        <td>{{libro.nombre_editorial}}</td>
+                                        <td>{{libro.nombre_autor}}</td>
+                                        <td>{{libro.precio}}</td>
+                                        <td>{{libro.cantidad}}</td>
+                                        {% if libro.activo %}
+                                            <td>Activo</td>
+                                        {% else %}
+                                            <td>Inactivo</td>
+                                        {% endif %}
+                                        <td>
+                                            <a href="{{url_for('libro.detalle', id=libro.id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                            <a href="{{url_for('libro.editar', id=libro.id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                            <a href="{{url_for('libro.eliminar', id = libro.id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="{{url_for('static',filename='js/confirmarGuardado.js')}}"></script>
+
+{% endblock %}
