@@ -558,3 +558,50 @@ BEGIN
 	END IF;
 END//
 DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_registro_usuario(
+    P_NOMBRE VARCHAR(200),
+    P_APELLIDOS VARCHAR(200),
+    P_CORREO_ELECTRONICO VARCHAR(100),
+    P_CONTRASENA VARCHAR(300)
+)
+BEGIN
+    DECLARE P_ACTIVO BOOL ;
+    DECLARE P_ID_ROL INT;
+    SET P_ACTIVO = 1;
+    SET P_ID_ROL = 3;
+
+    INSERT INTO USUARIO  (
+        NOMBRE,
+        APELLIDOS,
+        CORREO_ELECTRONICO,
+        CONTRASENA,
+        ID_ROL,
+        ACTIVO
+    ) VALUES (
+        P_NOMBRE,
+        P_APELLIDOS,
+        P_CORREO_ELECTRONICO,
+        SHA(P_CONTRASENA),
+        P_ID_ROL,
+        P_ACTIVO
+    );
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_login(p_correo_electronico VARCHAR(100),
+                          p_contrasena VARCHAR(300)
+                         )
+BEGIN
+    SELECT u.id, u.nombre, u.apellidos, u.correo_electronico, u.id_rol, r.nombre_rol
+    FROM usuario u
+    INNER JOIN rol r 
+    ON u.id_rol = r.id
+    WHERE correo_electronico = p_correo_electronico 
+    AND contrasena = SHA(p_contrasena) 
+    AND u.activo = 1;
+END //
+DELIMITER //

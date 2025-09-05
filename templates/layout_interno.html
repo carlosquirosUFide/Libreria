@@ -32,13 +32,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Acerca de</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Panel Administrativo</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{url_for('usuario.index')}}">Usuarios</a>
-                            <a class="dropdown-item" href="{{url_for('rol.index')}}">Roles</a>
-                        </div>
-                    </li>
+                    {% if session.get('id_rol') == 1%}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Panel Administrativo</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{url_for('usuario.index')}}">Usuarios</a>
+                                <a class="dropdown-item" href="{{url_for('rol.index')}}">Roles</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if session.get('id_rol') == 1 or session.get('id_rol') == 2%}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mantenimientos</a>
                         <div class="dropdown-menu">
@@ -48,17 +51,29 @@
                             <a class="dropdown-item" href="{{url_for('categoria.index')}}">Categorías</a>
                         </div>
                     </li>
+                    {% endif %}
                 </ul>
-
                 <!-- Perfil Dropdown -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link profile-dropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="rounded-circle" style="width: 40px; height: 40px; background-image: url('{{ url_for('static', filename='img/usuario.jpg') }}'); background-size: cover; background-position: center;"></div>
+                            {% if session.get('nombre') != None %} 
+                                <div class="text-center">{{session.get('nombre')}}</div-text-center>
+                            {% endif %}
+                            
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><a class="dropdown-item" href="#">Cambio de Contraseña</a></li>
+                            {% if session.get('id_rol') == None %}
+                                <li><a class="dropdown-item" href="{{url_for('home.login')}}">Inicio Sesión</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="#">Cambio de Contraseña</a></li>
+                                <li><a class="dropdown-item" href="#">Mis Compras</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('home.cerrarSesion')}}">Cerrar Sesión</a></li>
+                            {% endif %}
+                            
+                            
                         </ul>
                     </li>
                 </ul>
@@ -102,11 +117,13 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    toastMixin.fire({
-                        animation: true,
-                        icon: 'success',
-                        title: 'Registro guardado correctamente'
-                    });
+                    {% if category != 'error' %}
+                        toastMixin.fire({
+                            animation: true,
+                            icon: 'success',
+                            title: 'Registro guardado correctamente'
+                        });
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endwith %}
