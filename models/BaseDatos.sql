@@ -536,7 +536,7 @@ BEGIN
     SET NOMBRE = P_NOMBRE,
         APELLIDOS = P_APELLIDOS,
         CORREO_ELECTRONICO = P_CORREO_ELECTRONICO,
-        P_ID_ROL = ID_ROL
+        ID_ROL = P_ID_ROL
     WHERE ID = P_ID;
 END //
 DELIMITER ;
@@ -605,3 +605,5 @@ BEGIN
     AND u.activo = 1;
 END //
 DELIMITER //
+
+
