@@ -1,6 +1,6 @@
 {% extends 'layout_externo.html'%}
 
-{% block title %} Registro de Usuarios {% endblock %}
+{% block title %} Recuperar Acceso {% endblock %}
 
 {% block content%}
     <div class="container ">
@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-sm-10 col-md-6 ">
                 <div class="card border border-dark shadow">
                     <div class="card-header bg-primary">
-                        <h1 class="h1 text-white text-center">Inicio de Sesión</h1>
+                        <h1 class="h1 text-white text-center">Recuperar Acceso</h1>
                     </div>
                     <form action="" method="POST">
                         <div class="card-body">
@@ -26,15 +26,11 @@
                                 <label for="correo_electronico">Correo Electrónico</label>
                                 <input type="text" class="form-control" name="correo_electronico">
                             </div>
-                            <div class="form-group">
-                                <label for="contrasena">Contraseña</label>
-                                <input type="password" class="form-control" name="contrasena">
-                            </div>
                             <div class="d-flex justify-content-between my-3">
                                 <input type="submit" class="btn btn-success w-50 me-2" value="Guardar">
-                                <a href="{{url_for('home.registro')}}" class="btn btn-primary w-50">Registro</a>
+                                <a href="{{url_for('home.login')}}" class="btn btn-primary w-50">Inicio Sesión</a>
                             </div>
-                            <p ><a href="{{url_for('home.recuperarAcceso')}}">No recuerdo mi contraseña</a></p>
+                            <p ><a href="">No recuerdo mi contraseña</a></p>
                         </div>
                     </form>
 

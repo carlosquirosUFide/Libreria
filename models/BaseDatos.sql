@@ -81,6 +81,8 @@ CREATE TABLE IF NOT EXISTS CARRITO(
     CONSTRAINT FK_CARRITO_LIBRO FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO (ID) ON DELETE CASCADE
 );
 
+ALTER TABLE usuario ADD UNIQUE (correo_electronico);
+
 -- Inserción de datos
 -- Tabla categoría
 insert into libreria.categoria (nombre_categoria) values 
@@ -605,5 +607,41 @@ BEGIN
     AND u.activo = 1;
 END //
 DELIMITER //
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_cambiar_contrasena(
+    p_id int,
+    p_nueva_contrasena VARCHAR(300),
+    p_contrasena_actual VARCHAR(300)
+)
+BEGIN
+    UPDATE usuario
+    SET contrasena = SHA(p_nueva_contrasena)
+    WHERE id = p_id AND contrasena = SHA(p_contrasena_actual);
+END //
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_buscar_usuario_correo(
+    p_correo_electronico VARCHAR(100)
+)
+BEGIN
+    SELECT id, nombre, apellidos, correo_electronico, id_rol, activo
+    FROM usuario
+    WHERE correo_electronico = p_correo_electronico;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_recuperar_acceso(
+    p_correo_electronico VARCHAR(100),
+    p_contrasena VARCHAR(300)
+
+)
+BEGIN
+    UPDATE usuario
+    SET contrasena = SHA(p_contrasena)
+    WHERE correo_electronico = p_correo_electronico;
+END //
+DELIMITER ;
 
 

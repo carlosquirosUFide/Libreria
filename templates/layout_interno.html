@@ -56,10 +56,10 @@
                 <!-- Perfil Dropdown -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link profile-dropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="rounded-circle" style="width: 40px; height: 40px; background-image: url('{{ url_for('static', filename='img/usuario.jpg') }}'); background-size: cover; background-position: center;"></div>
+                        <a class="nav-link profile-dropdown d-flex align-items-center" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="rounded-circle me-2" style="width: 40px; height: 40px; background-image: url('{{ url_for('static', filename='img/usuario.jpg') }}'); background-size: cover; background-position: center;"></div>
                             {% if session.get('nombre') != None %} 
-                                <div class="text-center">{{session.get('nombre')}}</div-text-center>
+                                <span class="nombre-usuario">{{ session.get('nombre') }}</span>
                             {% endif %}  
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -67,7 +67,7 @@
                                 <li><a class="dropdown-item" href="{{url_for('home.login')}}">Inicio Sesión</a></li>
                             {% else %}
                                 <li><a class="dropdown-item" href="{{url_for('home.perfil', id = session.get('id_usuario'))}}">Perfil</a></li>
-                                <li><a class="dropdown-item" href="#">Cambio de Contraseña</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('home.cambiarContrasena')}}">Cambio de Contraseña</a></li>
                                 <li><a class="dropdown-item" href="#">Mis Compras</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('home.cerrarSesion')}}">Cerrar Sesión</a></li>
                             {% endif %}
