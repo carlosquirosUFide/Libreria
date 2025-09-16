@@ -1,16 +1,17 @@
-from flask import Blueprint, redirect, url_for, render_template, flash, request, session
+from flask import Blueprint, redirect, url_for, render_template, flash, request, session, jsonify
 from models.libroModel import LibroModel
 from models.homeModel import HomeModel
 from models.usuarioModel import UsuarioModel
 from models.comunesModel import ComunesModel
+from models.carritoModel import CarritoModel
 
 
 homebp = Blueprint("home", __name__)
 
-@homebp.route("/", methods = ['GET','POST'])
+@homebp.route("/", methods=['GET', 'POST'])
 def index():
     libros = LibroModel().listarLibros()
-    return render_template("/home/index.html", libros = libros)
+    return render_template("/home/index.html", libros=libros)
 
 @homebp.route("/registro", methods = ['GET','POST'])
 def registro():

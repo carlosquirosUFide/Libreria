@@ -81,6 +81,9 @@ CREATE TABLE IF NOT EXISTS CARRITO(
     CONSTRAINT FK_CARRITO_LIBRO FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO (ID) ON DELETE CASCADE
 );
 
+ALTER TABLE LIBRERIA.CARRITO 
+ADD SUBTOTAL DOUBLE NOT NULL;
+
 ALTER TABLE usuario ADD UNIQUE (correo_electronico);
 
 -- Inserción de datos
@@ -641,6 +644,22 @@ BEGIN
     UPDATE usuario
     SET contrasena = SHA(p_contrasena)
     WHERE correo_electronico = p_correo_electronico;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_agregar_productos_carritos(
+    p_id_usuario int,
+    p_id_libro int,
+    p_monto double(13,2),
+    p_cantidad int
+)
+BEGIN
+    DECLARE p_subtotal DOUBLE ;
+    SET p_subtotal = p_monto * p_cantidad;
+
+    INSERT INTO libreria.CARRITO (ID_USUARIO, ID_LIBRO, monto, cantidad, subtotal, fecha)
+    VALUES (p_id_usuario, p_id_libro, p_monto, p_cantidad,p_subtotal, NOW());
 END //
 DELIMITER ;
 

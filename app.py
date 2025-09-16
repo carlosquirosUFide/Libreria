@@ -6,6 +6,7 @@ from controllers.editorialController import editorialbp
 from controllers.rolController import rolbp
 from controllers.usuarioController import usuariobp
 from controllers.libroController import librobp
+from controllers.carritoController import carritobp
 
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ app.register_blueprint(editorialbp)
 app.register_blueprint(rolbp)
 app.register_blueprint(usuariobp)
 app.register_blueprint(librobp)
+app.register_blueprint(carritobp)
 
 
 app.config['UPLOAD_FOLDER'] = 'static/img'

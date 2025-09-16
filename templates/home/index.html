@@ -48,13 +48,22 @@
                 <div class="card border-secondary m-5" style="width: 18rem;">
                     <img src="{{url_for('static', filename = libro.url_imagen)}}" class="card-img-top mt-2" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{libro.nombre_libro}}</h5>
-                        <p class="card-text">Precio: {{libro.precio}}</p>
-                        <p class="card-text">Cantidad: {{libro.cantidad}}</p>
-                        <p class="card-text">Autor: {{libro.nombre_autor}}</p>
-                        <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
-                        <p class="card-text">Categoría: {{libro.nombre_categoria}}</p>
-                        <button class="btn btn-success">Agregar al carrito</button>
+                        <form action="{{url_for('carrito.agregar')}}" method ="POST" onsubmit="agregarCarrito(event, this)">
+                            <input type="hidden" id="monto" name ="monto" value="{{libro.precio}}">
+                            <input type="hidden" id="id_libro" name ="id_libro" value="{{libro.id}}">
+                            <h5 class="card-title">{{libro.nombre_libro}}</h5>
+                            <p class="card-text">Precio: {{libro.precio}}</p>
+                            <p class="card-text">Cantidad: {{libro.cantidad}}</p>
+                            <p class="card-text">Autor: {{libro.nombre_autor}}</p>
+                            <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
+                            <p class="card-text">Categoría: {{libro.nombre_categoria}}</p>
+                            <div class="d-flex flex-column align-items-center mb-3">
+                                <label for="cantidad" class="form-label">Cantidad</label>
+                                <input step="1" value= "1" required type="number" min="1" class="form-control w-50 text-center" name="cantidad" id="cantidad">
+                                <button class="btn btn-success my-3">Agregar al carrito</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             {% endfor %}
@@ -62,3 +71,5 @@
     </div>
 
 {% endblock %}
+
+
