@@ -1,0 +1,62 @@
+{% extends 'layout_interno.html' %}
+
+{% block title%} Carrito de Compra {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card border border-dark shadow mb-3">
+                <div class="card-header bg-primary">
+                    <h1 class="h1 text-white text-center">Carrito de Compra</h1>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% if category == 'error' %}
+                                    <div class="alert alert-danger text-center">{{message}}</div>
+                                {% endif %}
+                                        
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="Tabla">
+                            <thead class="table-primary">
+                                <tr>
+                                    <td>Nombre Libro</td>
+                                    <td>Imagen</td>
+                                    <td>Cantidad</td>
+                                    <td>Precio</td>
+                                    <td>Subtotal</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for carrito in carrito %}
+                                    <tr>
+                                        <td>{{carrito.nombre_libro}}</td>
+                                        <td><img src="{{url_for('static',filename=carrito.url_imagen)}}" width="100px" alt=""></td>
+                                        <td>{{carrito.cantidad}}</td>
+                                        <td>{{carrito.monto}}</td>
+                                        <td>{{carrito.subtotal}}</td>
+                                
+                                        <td>
+                                            <a href="{{url_for('carrito.aumentarCantidad',id= carrito.id)}}" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                                            <a href="{{url_for('carrito.disminuirCantidad',id = carrito.id)}}" class="btn btn-success"><i class="fas fa-minus"></i></a>
+                                            <a href="{{url_for('carrito.eliminar',id=carrito.id)}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--<script src="{{url_for('static',filename='js/confirmarGuardado.js')}}"></script>
+
+{% endblock %}

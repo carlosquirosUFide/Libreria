@@ -663,4 +663,37 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE libreria.sp_listar_productos_carrito(
+    p_id_usuario int
+)
+BEGIN
+    SELECT c.id, c.id_libro, c.id_usuario, c.monto, c.cantidad, c.subtotal, l.nombre_libro, l.url_imagen
+    FROM carrito c 
+    INNER JOIN libro l 
+    ON c.id_libro = l.id
+    WHERE c.id_usuario = p_id_usuario;
+   
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminar_producto_carrito(p_id_carrito INT)
+BEGIN
+    DELETE FROM libreria.carrito 
+    WHERE id = p_id_carrito;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE libreria.sp_aumentar_cantidad_producto(
+    p_id INT
+)
+BEGIN
+    UPDATE carrito 
+    SET cantidad = cantidad + 1
+    WHERE id = p_id;
+END //
+DELIMITER ;
+
 

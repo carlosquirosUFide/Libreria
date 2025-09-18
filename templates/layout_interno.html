@@ -68,6 +68,7 @@
                             {% else %}
                                 <li><a class="dropdown-item" href="{{url_for('home.perfil', id = session.get('id_usuario'))}}">Perfil</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('home.cambiarContrasena')}}">Cambio de Contraseña</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('carrito.index')}}">Carrito de Compra</a></li>
                                 <li><a class="dropdown-item" href="#">Mis Compras</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('home.cerrarSesion')}}">Cerrar Sesión</a></li>
                             {% endif %}
